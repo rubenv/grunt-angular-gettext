@@ -10,6 +10,12 @@ mkAttrRegex = (startDelim, endDelim) ->
     attrRegex = new RegExp(start + '\\s*(\'|"|&quot;)(.*?)\\1\\s*\\|\\s*translate\\s*' + end, 'g')
     return attrRegex
 
+mkPluralAttrRegex = (startDelim, endDelim) ->
+    start = startDelim.replace(escapeRegex, "\\$&")
+    end = endDelim.replace(escapeRegex, "\\$&")
+    attrRegex = new RegExp(start + '\\s*(\'|"|&quot;)(.*?)\\1\\s*\\|\\s*translateN\\s*:(?:.*?):\\s*(\'|"|&quot;)?(.*?)?\\3(?:.*?)' + end, 'g')
+    return attrRegex
+
 module.exports = (grunt) ->
     grunt.registerMultiTask 'nggettext_extract', 'Extract strings from views', () ->
         options = @options({
@@ -17,6 +23,8 @@ module.exports = (grunt) ->
             endDelim: '}}'
         })
         attrRegex = mkAttrRegex(options.startDelim, options.endDelim)
+        pluralAttrRegex = mkPluralAttrRegex(options.startDelim,
+                                            options.endDelim)
 
         @files.forEach (file) ->
             failed = false
@@ -56,6 +64,9 @@ module.exports = (grunt) ->
                 while matches = attrRegex.exec(src)
                     addString(filename, matches[2])
 
+                while matches = pluralAttrRegex.exec(src)
+                    addString(filename, matches[2], matches[4])
+
             walkJs = (node, fn) ->
                 fn(node)
                 for key, obj of node
@@ -85,3 +96,4 @@ module.exports = (grunt) ->
                 grunt.file.write(file.dest, catalog.toString())
 
 module.exports.mkAttrRegex = mkAttrRegex
+module.exports.mkPluralAttrRegex = mkPluralAttrRegex

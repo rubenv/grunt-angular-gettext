@@ -163,3 +163,23 @@ describe 'Extract', ->
             assert.equal(catalog.items[0].references[0], 'test/fixtures/php.php')
             done()
 
+    it 'Extracts plural filter strings', (done) ->
+        assert(fs.existsSync('tmp/plural_filter.pot'))
+
+        po.load 'tmp/plural_filter.pot', (catalog) ->
+            i = catalog.items
+            assert.equal(i.length, 2)
+
+            assert.equal(i[0].msgid, 'Bird')
+            assert.equal(i[0].msgid_plural, 'Birds')
+            assert.equal(i[0].msgstr.length, 2)
+            assert.equal(i[0].msgstr[0], '')
+            assert.equal(i[0].msgstr[1], '')
+
+            assert.equal(i[1].msgid, 'Second')
+            assert.equal(i[1].msgid_plural, 'secondPlural')
+            assert.equal(i[1].msgstr.length, 2)
+            assert.equal(i[1].msgstr[0], '')
+            assert.equal(i[1].msgstr[1], '')
+
+            done()
