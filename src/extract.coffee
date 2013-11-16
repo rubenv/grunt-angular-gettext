@@ -71,8 +71,8 @@ module.exports = (grunt) ->
                         addString(filename, str) if str
 
             file.src.forEach (input) ->
-                extractHtml(input) if input.match /\.(htm(|l)|php|phtml)$/
-                extractJs(input) if input.match /\.js$/
+                extractHtml(input) if input.match /\.(htm(|l)|php|phtml|html\.erb)$/
+                extractJs(input) if input.match /\.(js|js\.erb)$/
 
             catalog.headers =
                 "Content-Type": "text/plain; charset=UTF-8"
