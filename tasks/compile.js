@@ -1,7 +1,7 @@
-var langTemplate, po, template;
+var langTemplate, po, path, template;
 
 po = require('node-po');
-var path = require('path');
+path = require('path');
 
 template = function(module, body) {
   return "angular.module(\"" + module + "\").run(['gettextCatalog', function (gettextCatalog) {\n" + body + "\n}]);";
