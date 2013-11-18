@@ -1,6 +1,7 @@
 var langTemplate, po, template;
 
 po = require('node-po');
+var path = require('path');
 
 template = function(module, body) {
   return "angular.module(\"" + module + "\").run(['gettextCatalog', function (gettextCatalog) {\n" + body + "\n}]);";
@@ -34,7 +35,43 @@ module.exports = function(grunt) {
         }
         return body += langTemplate(catalog.headers.Language, strings);
       });
-      return grunt.file.write(file.dest, template(options.module, body));
+
+      grunt.file.write(file.dest, template(options.module, body));
+
+      if (options.concat) {
+        var targets = Array.isArray(options.concat) ? options.concat : [ options.concat ];
+        var concat  = grunt.config('concat') || {};
+
+        targets.forEach(function(target) {
+          target = path.normalize(target);
+          var task = concat[target];
+
+          if (!task) {
+            grunt.log.error('Unknown concat target: ' + target);
+            return;
+          }
+
+          if (task.src) {
+            task.src = Array.isArray(task.src) ? task.src : [ task.src ];
+            task.src.push(file.dest);
+          } else if (task.files) {
+            var files = task.files;
+
+            for (var key in files) {
+              files[key] = Array.isArray(files[key]) ? files[key] : [ files[key] ];
+              files[key].push(file.dest);
+            }
+          } else if (Array.isArray(task)) {
+              task.push(file.dest);
+          } else {
+            grunt.log.error('Could not find src or files in concat target: ' + target);
+          }
+
+          grunt.log.writeln('Added ' + file.dest.cyan + ' to ' + ('concat.' + target).cyan);
+
+          grunt.config('concat', concat);
+        });
+      }
     });
   });
 };
