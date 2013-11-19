@@ -163,3 +163,18 @@ describe 'Extract', ->
             assert.equal(catalog.items[0].references[0], 'test/fixtures/php.php')
             done()
 
+    it 'Extracts flagged plural strings from JavaScript source', (done) ->
+        assert(fs.existsSync('tmp/test13.pot'))
+
+        po.load 'tmp/test13.pot', (catalog) ->
+            i = catalog.items
+            assert.equal(i.length, 1)
+
+            assert.equal(i[0].msgid, 'Bird')
+            assert.equal(i[0].msgid_plural, 'Birds')
+            assert.equal(i[0].msgstr.length, 2)
+            assert.equal(i[0].msgstr[0], '')
+            assert.equal(i[0].msgstr[1], '')
+            assert.equal(catalog.items[0].references.length, 1)
+            assert.equal(catalog.items[0].references[0], 'test/fixtures/plural_source.js')
+            done()

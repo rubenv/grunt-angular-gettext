@@ -98,11 +98,21 @@ module.exports = function(grunt) {
           tolerant: true
         });
         return walkJs(syntax, function(node) {
-          var str, _ref, _ref1;
-          if ((node != null ? node.type : void 0) === 'CallExpression' && ((_ref = node.callee) != null ? _ref.name : void 0) === 'gettext') {
-            str = (_ref1 = node["arguments"]) != null ? _ref1[0].value : void 0;
-            if (str) {
-              return addString(filename, str);
+          var plural, singular, str, _ref, _ref1, _ref2, _ref3;
+          if ((node != null ? node.type : void 0) === 'CallExpression') {
+            switch ((_ref = node.callee) != null ? _ref.name : void 0) {
+              case 'gettext':
+                str = (_ref1 = node["arguments"]) != null ? _ref1[0].value : void 0;
+                if (str) {
+                  return addString(filename, str);
+                }
+                break;
+              case 'ngettext':
+                singular = (_ref2 = node["arguments"]) != null ? _ref2[0].value : void 0;
+                plural = (_ref3 = node["arguments"]) != null ? _ref3[1].value : void 0;
+                if (singular) {
+                  return addString(filename, singular, plural);
+                }
             }
           }
         });
