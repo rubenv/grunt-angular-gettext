@@ -66,9 +66,16 @@ module.exports = (grunt) ->
                 syntax = esprima.parse(src, { tolerant: true })
 
                 walkJs syntax, (node) ->
-                    if node?.type == 'CallExpression' && node.callee?.name == 'gettext'
-                        str = node.arguments?[0].value
-                        addString(filename, str) if str
+                    if node?.type == 'CallExpression'
+                        switch node.callee?.name
+                            when 'gettext'
+                                str = node.arguments?[0].value
+                                addString(filename, str) if str
+
+                            when 'ngettext'
+                                singular = node.arguments?[0].value
+                                plural = node.arguments?[1].value
+                                addString(filename, singular, plural) if singular
 
             file.src.forEach (input) ->
                 extractHtml(input) if input.match /\.(htm(|l)|php|phtml)$/
