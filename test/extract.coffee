@@ -203,3 +203,21 @@ describe 'Extract', ->
             assert.equal(catalog.items[1].references[0], 'test/fixtures/concat.js')
 
             done()
+
+    it 'Extracts strings and updates existing .pot', (done) ->
+        assert(fs.existsSync('tmp/test15.pot'))
+
+        po.load 'tmp/test15.pot', (err, catalog) ->
+            assert.equal(err, null)
+            assert.equal(catalog.items.length, 2)
+            assert.equal(catalog.items[0].msgid, 'Hello!')
+            assert.equal(catalog.items[0].msgstr, 'Bonjour!')
+            assert.equal(catalog.items[0].references.length, 1)
+            assert.equal(catalog.items[0].references[0], 'test/fixtures/sample.html')
+
+            assert.equal(catalog.items[1].msgid, 'This is a test')
+            assert.equal(catalog.items[1].msgstr, '')
+            assert.equal(catalog.items[1].references.length, 1)
+            assert.equal(catalog.items[1].references[0], 'test/fixtures/sample.html')
+
+            done()

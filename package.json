@@ -35,7 +35,8 @@
     "grunt-mocha-cli": "~1.0.6",
     "grunt-release": "~0.4.0",
     "coffee-script": "~1.6.3",
-    "grunt-contrib-jshint": "~0.7.2"
+    "grunt-contrib-jshint": "~0.7.2",
+    "grunt-contrib-copy": "~0.5.0"
   },
   "peerDependencies": {
     "grunt": "~0.4.1"
@@ -48,6 +49,7 @@
   "dependencies": {
     "cheerio": "~0.12.2",
     "esprima": "~1.0.3",
-    "pofile": "~0.2.1"
+    "pofile": "~0.2.1",
+    "async": "~0.2.9"
   }
 }
