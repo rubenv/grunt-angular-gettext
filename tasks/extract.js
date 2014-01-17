@@ -1,6 +1,7 @@
 var cheerio = require('cheerio');
 var po = require('pofile');
 var esprima = require('esprima');
+var async = require('async');
 
 var escapeRegex = /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g;
 
@@ -17,10 +18,10 @@ module.exports = function (grunt) {
             endDelim: '}}'
         });
         var attrRegex = mkAttrRegex(options.startDelim, options.endDelim);
+        var done = this.async();
 
-        this.files.forEach(function (file) {
+        async.each(this.files, function (file, callback) {
             var failed = false;
-            var catalog = new po();
             var strings = {};
 
             var escape = function (str) {
@@ -135,22 +136,63 @@ module.exports = function (grunt) {
                 }
             });
 
-            catalog.headers = {
-                "Content-Type": "text/plain; charset=UTF-8",
-                "Content-Transfer-Encoding": "8bit"
-            };
+            po.load(file.dest, function (err, data) {
+                var catalog = null;
 
-            for (var key in strings) {
-                catalog.items.push(strings[key]);
-            }
+                // When an existing catalog exists, restore its content.
+                // Otherwise, initialize a new catalog.
+                if (data) {
+                    catalog = data;
+                } else {
+                    catalog = new po();
 
-            catalog.items.sort(function (a, b) {
-                return a.msgid.localeCompare(b.msgid);
+                    catalog.headers = {
+                        "Content-Type": "text/plain; charset=UTF-8",
+                        "Content-Transfer-Encoding": "8bit"
+                    };
+                }
+
+                // Add new strings into the catalog.
+                for (var key in strings) {
+                    var string = strings[key];
+                    var item = null;
+
+                    for (var i = 0; i < catalog.items.length; i++) {
+                        if (catalog.items[i].msgid === string.msgid) {
+                            item = catalog.items[i];
+                            break;
+                        }
+                    }
+
+                    if (!item) {
+                        catalog.items.push(strings[key]);
+                    }
+                }
+
+                // Remove deprecated strings from the catalog.
+                var keys = Object.keys(strings).map(function (string) {
+                    return escape(string);
+                });
+                catalog.items.forEach(function (item, index) {
+                    if (keys.indexOf(item.msgid) === -1) {
+                        catalog.items.splice(index, 1);
+                    }
+                });
+
+                // Sort strings.
+                catalog.items.sort(function (a, b) {
+                    return a.msgid.localeCompare(b.msgid);
+                });
+
+                // Write the catalog.
+                if (!failed) {
+                    grunt.file.write(file.dest, catalog.toString());
+                }
+
+                callback();
             });
-
-            if (!failed) {
-                grunt.file.write(file.dest, catalog.toString());
-            }
+        }, function (error) {
+            done();
         });
     });
 };

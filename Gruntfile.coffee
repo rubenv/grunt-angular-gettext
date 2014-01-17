@@ -2,6 +2,7 @@ module.exports = (grunt) ->
     @loadNpmTasks('grunt-contrib-clean')
     @loadNpmTasks('grunt-contrib-jshint')
     @loadNpmTasks('grunt-contrib-watch')
+    @loadNpmTasks('grunt-contrib-copy')
     @loadNpmTasks('grunt-mocha-cli')
     @loadNpmTasks('grunt-release')
 
@@ -29,6 +30,11 @@ module.exports = (grunt) ->
                 options:
                     reporter: 'spec'
 
+        copy:
+            test:
+                files:
+                    'tmp/test15.pot': 'test/fixtures/sample.po'
+
         nggettext_extract:
             auto:
                 files:
@@ -44,6 +50,7 @@ module.exports = (grunt) ->
                     'tmp/test12.pot': 'test/fixtures/php.php'
                     'tmp/test13.pot': 'test/fixtures/sort.html'
                     'tmp/test14.pot': 'test/fixtures/concat.js'
+                    'tmp/test15.pot': 'test/fixtures/sample.html'
             manual:
                 files:
                     'tmp/test5.pot': 'test/fixtures/corrupt.html'
@@ -72,4 +79,4 @@ module.exports = (grunt) ->
     @registerTask 'default', ['test']
     @registerTask 'build', ['clean', 'jshint']
     @registerTask 'package', ['build', 'release']
-    @registerTask 'test', ['build', 'nggettext_extract:auto', 'nggettext_extract:custom', 'nggettext_compile', 'mochacli']
+    @registerTask 'test', ['build', 'copy:test', 'nggettext_extract:auto', 'nggettext_extract:custom', 'nggettext_compile', 'mochacli']
