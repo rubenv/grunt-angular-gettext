@@ -213,3 +213,14 @@ describe 'Extract', ->
             assert.equal(catalog.items[0].references.length, 1)
             assert.equal(catalog.items[0].references[0], 'test/fixtures/data.html')
             done()
+
+    it 'Extracts strings with interpolation from JavaScript source', (done) ->
+        assert(fs.existsSync('tmp/test16.pot'))
+        po.load 'tmp/test16.pot', (err, catalog) ->
+            assert.equal(err, null)
+            assert.equal(catalog.items.length, 1)
+            assert.equal(catalog.items[0].msgid, 'Hello {{ name }}!')
+            assert.equal(catalog.items[0].msgstr, '')
+            assert.equal(catalog.items[0].references.length, 1)
+            assert.equal(catalog.items[0].references[0], 'test/fixtures/interpolate.js')
+            done()
