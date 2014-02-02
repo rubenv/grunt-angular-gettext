@@ -109,13 +109,7 @@ module.exports = function (grunt) {
                 });
 
                 walkJs(syntax, function (node) {
-                    if (node !== null &&
-                        node.type === 'CallExpression' &&
-                        node.callee !== null &&
-                        node.callee.name === 'gettext' &&
-                        node["arguments"] !== null &&
-                        node["arguments"].length) {
-
+                    if (isGetText(node) || isGetString(node)) {
                         var arg = node["arguments"][0];
                         var str;
                         switch (arg.type) {
@@ -130,6 +124,31 @@ module.exports = function (grunt) {
                         }
                     }
                 });
+            }
+
+            function isGetText(node) {
+                return  node !== null &&
+                        node.type === 'CallExpression' &&
+                        node.callee !== null &&
+                        (node.callee.name === 'gettext') &&
+                        node["arguments"] !== null &&
+                        node["arguments"].length;
+            }
+
+            function isGetString(node) {
+                return  node &&
+                        node.type &&
+                        node.type === 'CallExpression' &&
+                        node.callee &&
+                        node.callee.type &&
+                        node.callee.type === 'MemberExpression' &&
+                        node.callee.object &&
+                        node.callee.object.name &&
+                        node.callee.object.name === 'gettextCatalog' &&
+                        node.callee.property &&
+                        node.callee.property.name === 'getString' &&
+                        node.arguments &&
+                        node.arguments.length;
             }
 
             file.src.forEach(function (input) {
