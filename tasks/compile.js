@@ -1,11 +1,11 @@
 var po = require('pofile');
 
 var template = function (module, body) {
-    return "angular.module(\"" + module + "\").run(['gettextCatalog', function (gettextCatalog) {\n" + body + "\n}]);";
+    return "angular.module(\"" + module + "\").run(['gettextCatalog', function (gettextCatalog) {\n" + body + "}]);";
 };
 
 var langTemplate = function (language, strings) {
-    return "    gettextCatalog.setStrings('" + language + "', " + (JSON.stringify(strings)) + ");\n";
+    return "gettextCatalog.setStrings('" + language + "', " + (JSON.stringify(strings, null, '    ')) + ");\n";
 };
 
 module.exports = function (grunt) {
