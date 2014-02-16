@@ -127,28 +127,25 @@ module.exports = function (grunt) {
             }
 
             function isGetText(node) {
-                return  node !== null &&
-                        node.type === 'CallExpression' &&
-                        node.callee !== null &&
-                        (node.callee.name === 'gettext') &&
-                        node["arguments"] !== null &&
-                        node["arguments"].length;
+                return node !== null &&
+                       node.type === 'CallExpression' &&
+                       node.callee !== null &&
+                       node.callee.name === 'gettext' &&
+                       node.arguments !== null &&
+                       node.arguments.length;
             }
 
             function isGetString(node) {
-                return  node &&
-                        node.type &&
-                        node.type === 'CallExpression' &&
-                        node.callee &&
-                        node.callee.type &&
-                        node.callee.type === 'MemberExpression' &&
-                        node.callee.object &&
-                        node.callee.object.name &&
-                        node.callee.object.name === 'gettextCatalog' &&
-                        node.callee.property &&
-                        node.callee.property.name === 'getString' &&
-                        node.arguments &&
-                        node.arguments.length;
+                return node !== null &&
+                       node.type === 'CallExpression' &&
+                       node.callee !== null &&
+                       node.callee.type === 'MemberExpression' &&
+                       node.callee.object !== null &&
+                       node.callee.object.name === 'gettextCatalog' &&
+                       node.callee.property !== null &&
+                       node.callee.property.name === 'getString' &&
+                       node.arguments !== null &&
+                       node.arguments.length;
             }
 
             file.src.forEach(function (input) {
