@@ -46,6 +46,7 @@
     "gettext"
   ],
   "dependencies": {
+    "angular-gettext-tools", "~0.0.1",
     "cheerio": "~0.12.2",
     "esprima": "~1.0.3",
     "pofile": "~0.2.1"
