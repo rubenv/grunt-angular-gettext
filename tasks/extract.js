@@ -142,7 +142,7 @@ module.exports = function (grunt) {
                     if (node !== null &&
                         node.type === 'CallExpression' &&
                         node.callee !== null &&
-                        node.callee.name === 'gettext' &&
+                        (node.callee.name === 'gettext' || node.callee.name === '__') &&
                         node["arguments"] !== null &&
                         node["arguments"].length) {
 
