@@ -20,6 +20,7 @@ module.exports = function (grunt) {
         var options = this.options({
             startDelim: '{{',
             endDelim: '}}',
+            markerName: 'gettext',
             extensions: {
                 htm: 'html',
                 html: 'html',
@@ -142,7 +143,7 @@ module.exports = function (grunt) {
                     if (node !== null &&
                         node.type === 'CallExpression' &&
                         node.callee !== null &&
-                        node.callee.name === 'gettext' &&
+                        node.callee.name === options.markerName &&
                         node["arguments"] !== null &&
                         node["arguments"].length) {
 

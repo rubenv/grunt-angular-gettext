@@ -64,6 +64,11 @@ module.exports = (grunt) ->
                   'tmp/test16.pot': 'test/fixtures/custom.extension'
                   'tmp/test17.pot': 'test/fixtures/custom.js_extension'
                   'tmp/test18.pot': 'test/fixtures/single.html'
+            custom_marker_name:
+                options:
+                    markerName: '__'
+                files:
+                  'tmp/test20.pot': 'test/fixtures/custom_marker_name.js'
 
         nggettext_compile:
             test1:
@@ -89,4 +94,4 @@ module.exports = (grunt) ->
     @registerTask 'default', ['test']
     @registerTask 'build', ['clean', 'jshint']
     @registerTask 'package', ['build', 'release']
-    @registerTask 'test', ['build', 'nggettext_extract:auto', 'nggettext_extract:custom', 'nggettext_extract:custom_extensions', 'nggettext_compile', 'mochacli']
+    @registerTask 'test', ['build', 'nggettext_extract:auto', 'nggettext_extract:custom', 'nggettext_extract:custom_extensions', 'nggettext_extract:custom_marker_name', 'nggettext_compile', 'mochacli']
