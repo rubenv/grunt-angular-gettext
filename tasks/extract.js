@@ -2,23 +2,14 @@ var Extractor = require('angular-gettext-tools').extract;
 
 module.exports = function (grunt) {
     grunt.registerMultiTask('nggettext_extract', 'Extract strings from views', function () {
-        var options = this.options({
-            startDelim: '{{',
-            endDelim: '}}',
-            markerName: 'gettext',
-            extensions: {
-                htm: 'html',
-                html: 'html',
-                php: 'html',
-                phtml: 'html',
-                js: 'js'
-            }
-        });
+        var options = this.options();
 
-        for (var extension in options.extensions) {
-            var strategy = options.extensions[extension];
-            if (!Extractor.isValidStrategy(strategy)) {
-                grunt.log.error("Invalid strategy " + strategy + " for extension " + extension);
+        if (options.extensions) {
+            for (var extension in options.extensions) {
+                var strategy = options.extensions[extension];
+                if (!Extractor.isValidStrategy(strategy)) {
+                    grunt.log.error("Invalid strategy " + strategy + " for extension " + extension);
+                }
             }
         }
 
