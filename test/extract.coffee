@@ -255,3 +255,15 @@ describe 'Extract', ->
             assert.equal(catalog.items[1].references[0], 'test/fixtures/no_delimiter.html')
 
             done()
+
+    it 'Can customize the marker name', (done) ->
+        assert(fs.existsSync('tmp/test20.pot'))
+
+        po.load 'tmp/test20.pot', (err, catalog) ->
+            assert.equal(err, null)
+            assert.equal(catalog.items.length, 1)
+            assert.equal(catalog.items[0].msgid, 'Hello custom')
+            assert.equal(catalog.items[0].msgstr, '')
+            assert.equal(catalog.items[0].references.length, 1)
+            assert.equal(catalog.items[0].references[0], 'test/fixtures/custom_marker_name.js')
+            done()
