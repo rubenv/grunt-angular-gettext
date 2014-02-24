@@ -5,6 +5,7 @@ module.exports = function (grunt) {
         var options = this.options({
             startDelim: '{{',
             endDelim: '}}',
+            markerName: 'gettext',
             extensions: {
                 htm: 'html',
                 html: 'html',
