@@ -1,13 +1,10 @@
-var compile = require('angular-gettext-tools').compile;
+var Compiler = require('angular-gettext-tools').Compiler;
 
 module.exports = function (grunt) {
     grunt.registerMultiTask('nggettext_compile', 'Compile strings from .po files', function () {
-        var options = this.options({
-            format: 'javascript',
-            module: 'gettext'
-        });
+        var options = this.options();
 
-        if (!compile.hasFormat(options.format)) {
+        if (options.format && !Compiler.hasFormat(options.format)) {
             throw new Error('There is no "' + options.format + '" output format.');
         }
 
@@ -16,7 +13,9 @@ module.exports = function (grunt) {
                 return grunt.file.read(input);
             });
 
-            grunt.file.write(file.dest, compile.convertPo(inputs, options));
+            var compiler = new Compiler(options);
+
+            grunt.file.write(file.dest, compiler.convertPo(inputs));
         });
     });
 };
