@@ -267,3 +267,15 @@ describe 'Extract', ->
             assert.equal(catalog.items[0].references.length, 1)
             assert.equal(catalog.items[0].references[0], 'test/fixtures/custom_marker_name.js')
             done()
+
+    it 'Can extract tapestry files', (done) ->
+        assert(fs.existsSync('tmp/test21.pot'))
+
+        po.load 'tmp/test21.pot', (err, catalog) ->
+            assert.equal(err, null)
+            assert.equal(catalog.items.length, 1)
+            assert.equal(catalog.items[0].msgid, 'Bonjour from HelloWorld component.')
+            assert.equal(catalog.items[0].msgstr, '')
+            assert.equal(catalog.items[0].references.length, 1)
+            assert.equal(catalog.items[0].references[0], 'test/fixtures/tapestry.tml')
+            done()
