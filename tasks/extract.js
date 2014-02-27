@@ -26,6 +26,7 @@ module.exports = function (grunt) {
                 html: 'html',
                 php: 'html',
                 phtml: 'html',
+                tml: 'html',
                 js: 'js'
             }
         });
