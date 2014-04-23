@@ -47,6 +47,6 @@
     "gettext"
   ],
   "dependencies": {
-    "angular-gettext-tools": "~0.0.11"
+    "angular-gettext-tools": "~0.0.14"
   }
 }
