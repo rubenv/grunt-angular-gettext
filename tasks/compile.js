@@ -16,16 +16,16 @@ module.exports = function (grunt) {
             });
 
             if (!output[file.dest]) {
-            	output[file.dest] = inputs;
+                output[file.dest] = inputs;
             } else {
-            	output[file.dest] = output[file.dest].concat(inputs);
+                output[file.dest] = output[file.dest].concat(inputs);
             }
         });
         
-        for(var dest in output) {
+        for (var dest in output) {
             var compiler = new Compiler(options);
 
-            grunt.file.write(dest, compiler.convertPo(output[dest]));        	
+            grunt.file.write(dest, compiler.convertPo(output[dest]));
         }
     });
 };
