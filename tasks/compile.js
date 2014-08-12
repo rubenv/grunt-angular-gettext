@@ -8,14 +8,24 @@ module.exports = function (grunt) {
             throw new Error('There is no "' + options.format + '" output format.');
         }
 
+        var output = {};
+        
         this.files.forEach(function (file) {
             var inputs = file.src.map(function (input) {
                 return grunt.file.read(input);
             });
 
+            if (!output[file.dest]) {
+            	output[file.dest] = inputs;
+            } else {
+            	output[file.dest] = output[file.dest].concat(inputs);
+            }
+        });
+        
+        for(var dest in output) {
             var compiler = new Compiler(options);
 
-            grunt.file.write(file.dest, compiler.convertPo(inputs));
-        });
+            grunt.file.write(dest, compiler.convertPo(output[dest]));        	
+        }
     });
 };
