@@ -92,6 +92,12 @@ module.exports = (grunt) ->
                 files:
                     'tmp/test4.json': 'test/fixtures/{nl,fr}.po'
 
+            test5:
+                options:
+                    format: 'json'
+                files:
+                    'tmp/test5.json': ['test/fixtures/fr.po', 'test/fixtures/fr1.po']
+
     @registerTask 'default', ['test']
     @registerTask 'build', ['clean', 'jshint']
     @registerTask 'package', ['build', 'release']

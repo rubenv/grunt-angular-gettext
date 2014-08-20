@@ -13,7 +13,7 @@ makeEnv = (mod, catalog) -> {
                     block[1](catalog)
             }
 }
-
+    
 describe 'Compile', ->
     it 'Compiles a .po file into a .js catalog', ->
         assert(fs.existsSync('tmp/test1.js'))
@@ -66,4 +66,15 @@ describe 'Compile', ->
             "This is a test": "Dit is een test",
             "Bird": ["Vogel", "Vogels"],
             "Hello \"world\"": "Hallo \"wereld\""
+        })
+
+    it 'Can output multiple files to single JSON', ->
+        assert(fs.existsSync('tmp/test5.json'))
+
+        data = JSON.parse(fs.readFileSync('tmp/test5.json'))
+        assert.deepEqual(data.fr, {
+            "Hello!": "Bonjour!"
+            "This is a test": "Ceci est un test",
+            "Bird": ["Oiseau", "Oiseaux"],
+            "Goodbye!": "Au revoir!"
         })
