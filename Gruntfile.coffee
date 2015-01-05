@@ -3,7 +3,6 @@ module.exports = (grunt) ->
     @loadNpmTasks('grunt-contrib-jshint')
     @loadNpmTasks('grunt-contrib-watch')
     @loadNpmTasks('grunt-mocha-cli')
-    @loadNpmTasks('grunt-release')
 
     @loadTasks('tasks')
 
@@ -100,5 +99,4 @@ module.exports = (grunt) ->
 
     @registerTask 'default', ['test']
     @registerTask 'build', ['clean', 'jshint']
-    @registerTask 'package', ['build', 'release']
     @registerTask 'test', ['build', 'nggettext_extract:auto', 'nggettext_extract:custom', 'nggettext_extract:custom_extensions', 'nggettext_extract:custom_marker_name', 'nggettext_compile', 'mochacli']

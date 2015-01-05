@@ -35,7 +35,6 @@
     "grunt-contrib-jshint": "~0.7.2",
     "grunt-contrib-watch": "~0.5.1",
     "grunt-mocha-cli": "~1.0.6",
-    "grunt-release": "~0.4.0",
     "pofile": "~0.2.4"
   },
   "peerDependencies": {
@@ -47,6 +46,6 @@
     "gettext"
   ],
   "dependencies": {
-    "angular-gettext-tools": "~1.0.0"
+    "angular-gettext-tools": "~2.0.0"
   }
 }
