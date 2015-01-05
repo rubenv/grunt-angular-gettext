@@ -3,6 +3,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-contrib-jshint");
     grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks("grunt-mocha-cli");
+    grunt.loadNpmTasks("grunt-bump");
     grunt.loadTasks("tasks");
 
     grunt.initConfig({
@@ -138,6 +139,14 @@ module.exports = function (grunt) {
                 files: {
                     "tmp/test5.json": ["test/fixtures/fr.po", "test/fixtures/fr1.po"]
                 }
+            }
+        },
+
+        bump: {
+            options: {
+                files: ['package.json'],
+                commitFiles: ['-a'],
+                pushTo: 'origin'
             }
         }
     });
