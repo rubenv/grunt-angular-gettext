@@ -1,7 +1,7 @@
 {
   "name": "grunt-angular-gettext",
   "description": "Tasks for extracting/compiling angular-gettext strings.",
-  "version": "2.1.9",
+  "version": "2.1.10",
   "homepage": "http://angular-gettext.rocketeer.be/",
   "author": {
     "name": "Ruben Vermeersch",
@@ -46,6 +46,6 @@
     "gettext"
   ],
   "dependencies": {
-    "angular-gettext-tools": "~2.1.9"
+    "angular-gettext-tools": "~2.1.10"
   }
 }
