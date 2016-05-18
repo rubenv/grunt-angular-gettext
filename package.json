@@ -29,13 +29,12 @@
     "test": "grunt test"
   },
   "devDependencies": {
-    "grunt": "^1.0.0",
-    "grunt-bump": "0.0.16",
+    "grunt": "^1.0.1",
+    "grunt-bump": "0.8.0",
     "grunt-contrib-clean": "^1.0.0",
     "grunt-contrib-jshint": "^1.0.0",
     "grunt-contrib-watch": "^1.0.0",
-    "grunt-mocha-cli": "~1.0.6",
-    "pofile": "~0.2.4"
+    "grunt-mocha-cli": "~2.1.0"
   },
   "peerDependencies": {
     "grunt": ">=0.4.1"
@@ -46,6 +45,6 @@
     "gettext"
   ],
   "dependencies": {
-    "angular-gettext-tools": "~2.1.15"
+    "angular-gettext-tools": "~2.2.0"
   }
 }
