@@ -25,7 +25,7 @@ module.exports = function (grunt) {
         for (var dest in output) {
             var compiler = new Compiler(options);
 
-            grunt.file.write(dest, compiler.convertPo(output[dest]));
+            grunt.file.write(dest, compiler.convertPo(output[dest], dest));
         }
     });
 };
