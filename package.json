@@ -34,7 +34,7 @@
     "grunt-contrib-clean": "^1.0.0",
     "grunt-contrib-jshint": "^1.0.0",
     "grunt-contrib-watch": "^1.0.0",
-    "grunt-mocha-cli": "~2.1.0"
+    "grunt-mocha-cli": "~7.0.0"
   },
   "peerDependencies": {
     "grunt": ">=0.4.1"
